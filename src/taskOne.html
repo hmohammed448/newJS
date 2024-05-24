@@ -23,7 +23,7 @@
 
         #randomColorBox {
             display: flex;
-            gap: 3rem;
+            /* gap: 3rem; */
             justify-content: center;
             flex-flow: row wrap;
         }
@@ -56,12 +56,6 @@
             padding: 1px 10px;
             border-radius: 5px;
         }
-
-        /* #drop-zone {
-            background-color: gray;
-            min-width: 500px;
-            min-height: 500px;
-        } */
     </style>
 </head>
 
@@ -74,14 +68,13 @@
         </div>
         <div class="container" id="randomColorBox">
         </div>
-        <!-- <div id="drop-zone"></div> -->
     </div>
     <script>
         const inpField = document.querySelector('#inputNumber');
         const btnColor = document.querySelector('button');
 
         let randomColorBox = document.getElementById('randomColorBox');
-
+        let uniqueID = 1;
         function randomColor() {
             let str = '1234567890ABCDEF';
             let finalColor = "#";
@@ -104,8 +97,7 @@
 
             let box = document.createElement('div');
             box.className = 'randomColorBox__item dragThing';
-            box.id = 'boxID';
-            box.setAttribute("draggable", "true");
+            box.setAttribute("id", uniqueID);
             box.innerHTML = `
                 <div class="boxColor" style="background-color: ${color}"></div>
                 <p class="text-center bg-gray-500 text-white font-semibold">${inputNumber}</p>
@@ -114,11 +106,24 @@
 
             // Empty Input Field
             inpField.value = "";
+            uniqueID++;
         }
 
-
         function init() {
-            dragula([document.querySelector('#randomColorBox')]);
+            dragula([randomColorBox]).on('drop', function (el, target, source, sibling) {
+                handleDrop(el, target, source, sibling);
+            });
+        }
+
+        function handleDrop(el, target, source, sibling) {
+            let draggedElement = Number(el.querySelector('p').textContent);
+            let siblingElement = sibling ? Number(sibling.querySelector('p').textContent) : el.remove(); // If sibling is null, then remove it
+
+            if (sibling) {
+                let newValue = draggedElement + siblingElement;
+                sibling.querySelector('p').textContent = newValue;
+                el.remove();
+            }
         }
     </script>
 </body>
