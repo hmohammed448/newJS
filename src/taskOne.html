@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bevacqua/dragula/dist/dragula.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula/dist/dragula.min.js"></script>
     <style>
         .inpDiv {
             display: inline-block;
@@ -54,10 +56,16 @@
             padding: 1px 10px;
             border-radius: 5px;
         }
+
+        /* #drop-zone {
+            background-color: gray;
+            min-width: 500px;
+            min-height: 500px;
+        } */
     </style>
 </head>
 
-<body>
+<body onload="init()">
     <div class="container flex justify-center flex-col items-center mx-auto py-4 gap-4">
         <div class="inpDiv">
             <label for="inp">Enter Number : </label>
@@ -66,6 +74,7 @@
         </div>
         <div class="container" id="randomColorBox">
         </div>
+        <!-- <div id="drop-zone"></div> -->
     </div>
     <script>
         const inpField = document.querySelector('#inputNumber');
@@ -94,7 +103,9 @@
             let color = randomColor();
 
             let box = document.createElement('div');
-            box.className = 'randomColorBox__item';
+            box.className = 'randomColorBox__item dragThing';
+            box.id = 'boxID';
+            box.setAttribute("draggable", "true");
             box.innerHTML = `
                 <div class="boxColor" style="background-color: ${color}"></div>
                 <p class="text-center bg-gray-500 text-white font-semibold">${inputNumber}</p>
@@ -105,6 +116,10 @@
             inpField.value = "";
         }
 
+
+        function init() {
+            dragula([document.querySelector('#randomColorBox')]);
+        }
     </script>
 </body>
 
