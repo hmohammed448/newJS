@@ -4,108 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./src/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
     <style>
-        .inpDiv {
-            display: inline-block;
-            border: 1px solid;
-            border-radius: 5px;
-            padding: 10px;
+        body {
+            background-color: black;
+            color: white;
+            font-family: "Poetsen One", sans-serif;
+            text-align: center;
         }
 
-        .inpDiv input {
-            outline: none;
-            border: 1px solid;
-            border-radius: 3px;
-        }
-
-        #randomColorBox {
-            display: flex;
-            gap: 3rem;
-            justify-content: center;
-            flex-flow: row wrap;
-        }
-
-        .randomColorBox__item {
-            border: 1px dotted;
-            min-width: 150px;
-            width: auto;
-            padding: 5px;
-            border-radius: 10px;
-        }
-
-        .boxColor {
-            min-width: 100%;
-            min-height: 50px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-        }
-
-        .randomColorBox__item p {
-            border-bottom-right-radius: 5px;
-            border-bottom-left-radius: 5px;
-            cursor: pointer;
-            padding: 0 3px;
-            word-break: break-all;
-        }
-
-        button {
-            background-color: cadetblue;
-            padding: 1px 10px;
-            border-radius: 5px;
+        a {
+            color: white;
+            text-decoration: none;
+            font-size: small;
         }
     </style>
+
 </head>
 
 <body>
-    <div class="container flex justify-center flex-col items-center mx-auto py-4 gap-4">
-        <div class="inpDiv">
-            <label for="inp">Enter Number : </label>
-            <input type="text" title="Please enter only numbers" id="inputNumber" />
-            <button onclick="addColor()">Add Color</button>
-        </div>
-        <div class="container" id="randomColorBox">
-        </div>
+    <div class="container">
+        <h1>Assignments</h1>
+        <a href="./src/taskOne.html">TASK 1</a>
     </div>
-    <script>
-        const inpField = document.querySelector('#inputNumber');
-        const btnColor = document.querySelector('button');
-
-        let randomColorBox = document.getElementById('randomColorBox');
-
-        function randomColor() {
-            let str = '1234567890ABCDEF';
-            let finalColor = "#";
-            for (let i = 0; i < 6; i++) {
-                let color = Math.floor(Math.random() * 16);
-                finalColor += str[color];
-            }
-            return finalColor;
-        }
-
-        function addColor() {
-            let inputNumber = inpField.value;
-            if (!Number(inputNumber) || inputNumber === "") {
-                alert("Please enter valid number!");
-                inpField.value = "";
-                return;
-            };
-
-            let color = randomColor();
-
-            let box = document.createElement('div');
-            box.className = 'randomColorBox__item';
-            box.innerHTML = `
-                <div class="boxColor" style="background-color: ${color}"></div>
-                <p class="text-center bg-gray-500 text-white font-semibold">${inputNumber}</p>
-            `
-            randomColorBox.append(box);
-
-            // Empty Input Field
-            inpField.value = "";
-        }
-
-    </script>
 </body>
 
 </html>
