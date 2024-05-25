@@ -42,6 +42,8 @@
             border: 1px solid;
             border-radius: 5px;
             padding: 10px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
         }
 
         .inpDiv input {
@@ -91,6 +93,9 @@
 
 <body onload="init()">
     <div class="container flex justify-center flex-col items-center mx-auto py-4 gap-4">
+        <h1>Draggable</h1>
+        <h4 class="underline">Drag between the Queue for Adding</h4>
+        <h4 class="underline">Drag in the End of the Queue to decrease below counter</h4>
         <div class="inpDiv">
             <label for="inp">Enter Number : </label>
             <input type="text" title="Please enter only numbers" id="inputNumber" />
@@ -99,7 +104,6 @@
         <div class="container" id="randomColorBox">
         </div>
         <div id="draggerMinus">
-            <h1>Drag your Box outside the Queue to Decrease Value</h1>
             <h3 id="decreaseValue">10</h3>
         </div>
     </div>
