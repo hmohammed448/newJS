@@ -23,14 +23,16 @@
             padding: 5px 10px;
             margin-left: auto;
             margin-right: auto;
-            border-radius: 50%;
+            border-radius: 5px;
             background-color: cadetblue;
             color: white;
+            min-width: 100px;
         }
 
         #draggerMinus {
             min-height: 300px !important;
-            border: 1px solid;
+            border: none;
+            border-top: 1px solid;
             border-radius: 10px;
             padding: 10px;
         }
@@ -87,17 +89,17 @@
     </style>
 </head>
 
-<body>
+<body onload="init()">
     <div class="container flex justify-center flex-col items-center mx-auto py-4 gap-4">
         <div class="inpDiv">
             <label for="inp">Enter Number : </label>
             <input type="text" title="Please enter only numbers" id="inputNumber" />
-            <button>Add Color</button>
+            <button onclick="addColor()">Add Color</button>
         </div>
         <div class="container" id="randomColorBox">
         </div>
         <div id="draggerMinus">
-            <h1>Drag your Box inside to Decrease Value</h1>
+            <h1>Drag your Box outside the Queue to Decrease Value</h1>
             <h3 id="decreaseValue">10</h3>
         </div>
     </div>
@@ -117,7 +119,8 @@
             return finalColor;
         }
 
-        btnColor.addEventListener('click', function addColor() {
+        // btnColor.addEventListener('click', 
+        function addColor() {
             let inputNumber = inpField.value;
             if (!Number(inputNumber) || inputNumber === "") {
                 alert("Please enter valid number!");
@@ -139,7 +142,8 @@
             // Empty Input Field
             inpField.value = "";
             uniqueID++;
-        });
+        }
+        // );
 
         function init() {
             dragula([randomColorBox, draggerMinus])
@@ -147,7 +151,7 @@
                     handleDrop(el, target, source, sibling);
                 });
         }
-        init();
+        // init();
 
         let h3Value = document.getElementById('decreaseValue');
         let currentElement;
@@ -160,8 +164,6 @@
                 siblingElement = Number(sibling.querySelector('p').textContent); // If sibling is null, then remove it
             } else if (!sibling) {
                 siblingElement = 0;
-            } else {
-                siblingElement = h3Value.textContent;
             }
 
             let newValue;
@@ -172,8 +174,6 @@
             } else if (!sibling) {
                 newValue = decValue - draggedElement;
                 h3Value.textContent = newValue;
-                el.remove();
-            } else if (siblingElement == 0) {
                 el.remove();
             }
         }
