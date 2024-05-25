@@ -8,6 +8,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bevacqua/dragula/dist/dragula.min.css">
     <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula/dist/dragula.min.js"></script>
     <style>
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        h3 {
+            display: table;
+            font-size: 1.3rem;
+            font-weight: 500;
+            text-align: center;
+            border: 1px solid black;
+            padding: 5px 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+            background-color: cadetblue;
+            color: white;
+        }
+
+        #draggerMinus {
+            min-height: 300px !important;
+            border: 1px solid;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
         .inpDiv {
             display: inline-block;
             border: 1px solid;
@@ -55,18 +82,23 @@
             background-color: cadetblue;
             padding: 1px 10px;
             border-radius: 5px;
+            color: white;
         }
     </style>
 </head>
 
-<body onload="init()">
+<body>
     <div class="container flex justify-center flex-col items-center mx-auto py-4 gap-4">
         <div class="inpDiv">
             <label for="inp">Enter Number : </label>
             <input type="text" title="Please enter only numbers" id="inputNumber" />
-            <button onclick="addColor()">Add Color</button>
+            <button>Add Color</button>
         </div>
         <div class="container" id="randomColorBox">
+        </div>
+        <div id="draggerMinus">
+            <h1>Drag your Box inside to Decrease Value</h1>
+            <h3 id="decreaseValue">10</h3>
         </div>
     </div>
     <script>
@@ -85,7 +117,7 @@
             return finalColor;
         }
 
-        function addColor() {
+        btnColor.addEventListener('click', function addColor() {
             let inputNumber = inpField.value;
             if (!Number(inputNumber) || inputNumber === "") {
                 alert("Please enter valid number!");
@@ -107,21 +139,41 @@
             // Empty Input Field
             inpField.value = "";
             uniqueID++;
-        }
+        });
 
         function init() {
-            dragula([randomColorBox]).on('drop', function (el, target, source, sibling) {
-                handleDrop(el, target, source, sibling);
-            });
+            dragula([randomColorBox, draggerMinus])
+                .on('drop', function (el, target, source, sibling) {
+                    handleDrop(el, target, source, sibling);
+                });
         }
+        init();
 
+        let h3Value = document.getElementById('decreaseValue');
+        let currentElement;
         function handleDrop(el, target, source, sibling) {
-            let draggedElement = Number(el.querySelector('p').textContent);
-            let siblingElement = sibling ? Number(sibling.querySelector('p').textContent) : el.remove(); // If sibling is null, then remove it
+            let decValue = h3Value.textContent;
 
+            let draggedElement = Number(el.querySelector('p').textContent);
+            let siblingElement;
             if (sibling) {
-                let newValue = draggedElement + siblingElement;
+                siblingElement = Number(sibling.querySelector('p').textContent); // If sibling is null, then remove it
+            } else if (!sibling) {
+                siblingElement = 0;
+            } else {
+                siblingElement = h3Value.textContent;
+            }
+
+            let newValue;
+            if (sibling) {
+                newValue = draggedElement + siblingElement;
                 sibling.querySelector('p').textContent = newValue;
+                el.remove();
+            } else if (!sibling) {
+                newValue = decValue - draggedElement;
+                h3Value.textContent = newValue;
+                el.remove();
+            } else if (siblingElement == 0) {
                 el.remove();
             }
         }
