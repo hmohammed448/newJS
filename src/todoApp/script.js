@@ -29,7 +29,7 @@ let addTask = () => {
   createTaskElement(id, taskValue);
 
   let newTask = {
-    id: id,
+    id: Number(id),
     taskName: taskValue,
   };
   id++;
@@ -44,7 +44,7 @@ let addTask = () => {
 function createTaskElement(id, taskValue) {
   let createTask = document.createElement("div");
   createTask.className = "todoTask";
-  createTask.innerHTML = `<textarea id="task-${id}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${id})>Delete</small>`;
+  createTask.innerHTML = `<textarea id="task-${Number(id)}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${id})>Delete</small>`;
   taskList.append(createTask);
 }
 
