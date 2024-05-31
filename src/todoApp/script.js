@@ -4,7 +4,7 @@ let addTaskBtn = document.querySelector("#add-task-btn");
 let deleteBtn = document.getElementsByClassName("delete");
 let textAreas = document.getElementsByTagName("textarea");
 
-let id;
+let id = 1;
 let allTask = JSON.parse(localStorage.getItem("allTaskStorage")) || [];
 
 if (allTask.length > 0) {
@@ -13,10 +13,11 @@ if (allTask.length > 0) {
 
 let addTask = () => {
   // LargestID Checking to assign Unique ID
-  let largestID;
+  let largestID = 0;
   if (allTask.length > 0) {
     largestID = allTask.map((el) => el.id).sort((a, b) => a - b);
     id = Number(largestID[largestID.length - 1] + 1);
+    console.log("ID : ", id);
   }
 
   taskInput.value == "" && alert("Please enter task value!");
@@ -28,7 +29,7 @@ let addTask = () => {
   createTaskElement(id, taskValue);
 
   let newTask = {
-    id: Number(id),
+    id: id,
     taskName: taskValue,
   };
   id++;
@@ -44,9 +45,7 @@ let addTask = () => {
 function createTaskElement(id, taskValue) {
   let createTask = document.createElement("div");
   createTask.className = "todoTask";
-  createTask.innerHTML = `<textarea id="task-${Number(
-    id
-  )}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${Number(id)})>Delete</small>`;
+  createTask.innerHTML = `<textarea id="task-${id}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${id})>Delete</small>`;
   taskList.append(createTask);
 }
 
@@ -79,12 +78,12 @@ function editTextArea(event) {
   allTask.forEach((el, index) => {
     if (el.id == newID) {
       arrayIndex = index;
-      // console.log("Found : ", el.taskName, index);
     }
   });
   allTask[arrayIndex].taskName = document.getElementById(tar).value;
   localStorage.setItem("allTaskStorage", JSON.stringify(allTask)); // Updating = set Updated Data to localStorage
   console.log(allTask);
+  console.log("ID : ", newID, " ", typeof newID);
 }
 
 Array.from(textAreas).forEach((el) => {
