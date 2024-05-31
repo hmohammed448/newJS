@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Form to PDF</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            font-size: large;
+            font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+            line-height: 1.6;
+        }
+
+        button {
+            background-color: lightblue;
+            padding: 15px 30px;
+            margin: 1rem auto;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: large;
+            cursor: pointer;
+        }
+
+        .invoiceHeader {
+            padding-top: 1rem;
+        }
+
+        .outBorder {
+            border: 3px solid #1D3B5B;
+            border-radius: 8px;
+            padding: 1rem 20px 3rem 20px !important;
+            width: 80vw !important;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 3rem !important;
+        }
+
+        .formDivPart2 {
+            border: 3px solid #1D3B5B;
+            padding: 1rem 20px 3rem 20px !important;
+            border-radius: 10px;
+            width: 60%;
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invoiceHeader" id="divID">
+        <div class="formDivPart2">
+            <table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="width: 100%;">
+                <!-- Table Head -->
+                <thead>
+                    <tr style="background-color: black; color: #ffffff; font-weight: 700;">
+                        <th colspan="1"
+                            style="width: 50px; text-align: center; padding: 10px 5px !important; text-align: left;">
+                            S.No.
+                        </th>
+                        <th colspan="5" style="padding: 10px 5px !important; letter-spacing: 1.5px; text-align: left;">
+                            Item
+                        </th>
+                        <th colspan="1" style="padding: 10px 5px !important; letter-spacing: 1.5px;" align="center">
+                            Qty.
+                        </th>
+                        <th colspan="3" style="padding: 10px 5px !important; letter-spacing: 1.5px; text-align: left;">
+                            Price
+                        </th>
+                        <th colspan="2" style="padding: 10px 5px !important; letter-spacing: 1.5px; text-align: left;">
+                            Total
+                        </th>
+                    </tr>
+                </thead>
+
+                <!-- Table Body -->
+                <tbody>
+                    <tr>
+                        <td colspan="1" style="width: 50px; text-align: center; padding: 10px 5px !important;">1
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important;">Hotel Sagar</td>
+                        <td colspan="1" style="padding: 10px 5px !important;" align="center">3</td>
+                        <td colspan="3" style="padding: 10px 5px !important;">₹896.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹2,688.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="width: 50px; text-align: center; padding: 10px 5px !important;">2
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important;">Hotel Harshdeep</td>
+                        <td colspan="1" style="padding: 10px 5px !important;" align="center">9</td>
+                        <td colspan="3" style="padding: 10px 5px !important;">₹800.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹7,200.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="width: 50px; text-align: center; padding: 10px 5px !important;">3
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important;">Kota to Dewas</td>
+                        <td colspan="1" style="padding: 10px 5px !important;" align="center">1</td>
+                        <td colspan="3" style="padding: 10px 5px !important;">₹130.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹130.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="width: 50px; text-align: center; padding: 10px 5px !important;">4
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important;">Dewas to Kota</td>
+                        <td colspan="1" style="padding: 10px 5px !important;" align="center">1</td>
+                        <td colspan="3" style="padding: 10px 5px !important;">₹670.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹670.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="width: 50px; text-align: center; padding: 10px 5px !important;">5
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important;">Lunch (No Bill) 6th May</td>
+                        <td colspan="1" style="padding: 10px 5px !important;" align="center">1</td>
+                        <td colspan="3" style="padding: 10px 5px !important;">₹129.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹129.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="width: 50px; text-align: center; padding: 10px 5px !important;">6
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important;">Lunch + Dinner in Cash (No Bill)</td>
+                        <td colspan="1" style="padding: 10px 5px !important;" align="center">16</td>
+                        <td colspan="3" style="padding: 10px 5px !important;">₹190.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹3,040.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="width: 50px; text-align: center; padding: 10px 5px !important;">7
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important;">Water Bottle</td>
+                        <td colspan="1" style="padding: 10px 5px !important;" align="center">16</td>
+                        <td colspan="3" style="padding: 10px 5px !important;">₹20.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹160.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"
+                            style="width: 50px; text-align: center; padding: 10px 5px !important; border-bottom: 3px solid;">
+                            8
+                        </td>
+                        <td colspan="5" style="padding: 10px 5px !important; border-bottom: 3px solid;">Auto +
+                            Miscellaneous Expenses</td>
+                        <td colspan="1" style="padding: 10px 5px !important; border-bottom: 3px solid;" align="center">1
+                        </td>
+                        <td colspan="3" style="padding: 10px 5px !important; border-bottom: 3px solid;">₹1,774.00</td>
+                        <td colspan="2" style="padding: 10px 5px !important; border-bottom: 3px solid;">₹1,774.00</td>
+                    </tr>
+                </tbody>
+
+                <!-- Table Footer -->
+                <tfoot>
+                    <tr>
+                        <td colspan="7" style="padding: 10px 5px !important;"></td>
+                        <td colspan="3" style="padding: 10px 5px !important;  font-weight: 700;">
+                            Subtotal:
+                        </td>
+                        <td colspan="2" style="padding: 10px 5px !important;">₹15,791.00</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="7"></td>
+                        <td colspan="3" style="padding: 10px 5px !important;  font-weight: 700;">
+                            CGST % :
+                        </td>
+                        <td colspan="2" style="padding: 10px 5px !important; font-weight: 900;">-</td>
+                    </tr>
+                    <tr>
+                        <td colspan="7"></td>
+                        <td colspan="3" style="padding: 10px 5px !important;  font-weight: 700;">
+                            SGST % :
+                        </td>
+                        <td colspan="2" style="padding: 10px 5px !important; font-weight: 900;">-</td>
+                    </tr>
+                    <tr>
+                        <td colspan="7"></td>
+                        <td colspan="3"
+                            style="padding: 10px 10px !important; background-color: black; color: white; font-weight: 700;">
+                            Grand Total:</td>
+                        <td colspan="2"
+                            style="padding: 10px 10px !important; background-color: black; color: white; font-weight: 700; text-align: left;">
+                            ₹15,791.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <center><button onclick="convertHTMLtoPDF()">Download</button></center>
+
+
+    <script>
+        //  HTML to PDF png inside
+        function convertHTMLtoPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdfWidth = 210; // A4 width in mm
+            const pdfHeight = 297; // A4 height in mm
+            let doc = new jsPDF("p", "mm", "a4");
+            let pdfjs = document.querySelector("#divID");
+
+            html2canvas(pdfjs, { scale: 2 }).then((canvas) => {
+                const imgData = canvas.toDataURL("image/png");
+                const imgProps = doc.getImageProperties(imgData);
+                const pdfCanvasWidth = doc.internal.pageSize.getWidth();
+                const pdfCanvasHeight = (imgProps.height * pdfCanvasWidth) / imgProps.width;
+                doc.addImage(imgData, "PNG", 0, 0, pdfCanvasWidth, pdfCanvasHeight);
+                doc.save("newpdf.pdf");
+            });
+        }
+    </script>
+</body>
+
+</html>
