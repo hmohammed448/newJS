@@ -16,7 +16,6 @@ let addTask = () => {
   let largestID;
   if (allTask.length > 0) {
     largestID = allTask.map((el) => el.id).sort((a, b) => a - b);
-    console.log("largestID : ", largestID[largestID.length - 1]);
     id = Number(largestID[largestID.length - 1] + 1);
   }
 
@@ -47,7 +46,7 @@ function createTaskElement(id, taskValue) {
   createTask.className = "todoTask";
   createTask.innerHTML = `<textarea id="task-${Number(
     id
-  )}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${id})>Delete</small>`;
+  )}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${Number(id)})>Delete</small>`;
   taskList.append(createTask);
 }
 
@@ -80,7 +79,7 @@ function editTextArea(event) {
   allTask.forEach((el, index) => {
     if (el.id == newID) {
       arrayIndex = index;
-      console.log("Found : ", el.taskName, index);
+      // console.log("Found : ", el.taskName, index);
     }
   });
   allTask[arrayIndex].taskName = document.getElementById(tar).value;
