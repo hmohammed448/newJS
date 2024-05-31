@@ -17,7 +17,7 @@ let addTask = () => {
   if (allTask.length > 0) {
     largestID = allTask.map((el) => el.id).sort((a, b) => a - b);
     console.log("largestID : ", largestID[largestID.length - 1]);
-    id = largestID[largestID.length - 1] + 1;
+    id = Number(largestID[largestID.length - 1] + 1);
   }
 
   taskInput.value == "" && alert("Please enter task value!");
@@ -38,13 +38,16 @@ let addTask = () => {
   allTask.push(newTask);
   localStorage.setItem("allTaskStorage", JSON.stringify(allTask));
   checkHeight();
+  console.log("Task : ", allTask);
 };
 
 // createTaskElement function
 function createTaskElement(id, taskValue) {
   let createTask = document.createElement("div");
   createTask.className = "todoTask";
-  createTask.innerHTML = `<textarea id="task-${Number(id)}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${id})>Delete</small>`;
+  createTask.innerHTML = `<textarea id="task-${Number(
+    id
+  )}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${id})>Delete</small>`;
   taskList.append(createTask);
 }
 
@@ -72,7 +75,7 @@ checkHeight();
 function editTextArea(event) {
   let tar = event.target.id;
 
-  const newID = tar.slice(5);
+  const newID = Number(tar.slice(5));
   let arrayIndex;
   allTask.forEach((el, index) => {
     if (el.id == newID) {
