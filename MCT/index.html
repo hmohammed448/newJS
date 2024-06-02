@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Roboto mono", monospace;
+        }
+
+        .container {
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column wrap;
+            margin: auto auto;
+            padding-top: 10rem;
+            position: relative;
+        }
+
+        .post {
+            background-color: aquamarine;
+            padding: 2rem;
+            border: none;
+            border-radius: 1rem;
+            margin: 1rem 1rem;
+            min-height: 200px;
+            width: 70%;
+            display: none;
+        }
+
+        .img {
+            width: 100px;
+            height: 80px;
+            border-right: 2px solid gray;
+            padding-right: 1rem;
+        }
+
+        .img>img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .details {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .loader {
+            width: 100%;
+            height: 4.8px;
+            display: inline-block;
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .loader::after {
+            content: '';
+            box-sizing: border-box;
+            width: 0;
+            height: 4.8px;
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 5s linear infinite;
+        }
+
+        .fa-quote-right {
+            left: 40px;
+        }
+
+        .fa-quote {
+            color: #fff;
+            font-size: 28px;
+            position: absolute;
+            top: 70px;
+        }
+
+        @keyframes animFw {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body style="background-color: #000;">
+    <div class="container">
+    </div>
+    <script>
+        const data = [
+            {
+                name: "Sasha Ho",
+                position: "Accountant",
+                body: "I've worked with literally hundreds of HTML/CSS developers and I have to say the top spot goes to this guy. This guy is an amazing developer. He stresses on good, clean code and pays heed to the details. I love developers who respect each and every aspect of a thoroughly thought out design and do their best to put it in code. He goes over and beyond and transforms ART into PIXELS - without a glitch, every time.",
+                img: "https://wpacfvcbridge.com/wp-content/uploads/2017/10/photo-1494790108377-be9c29b29330.jpeg",
+            },
+            {
+                name: "Veeti Seppanen",
+                position: "Director",
+                body: "This guy is a hard worker. Communication was also very good with him and he was very responsive all the time, something not easy to find in many freelancers. We'll definitely repeat with him.",
+                img: "https://images.squarespace-cdn.com/content/v1/51ef4493e4b0561c90fa76d6/1538426393436-K1MYAHN7VT68NEQ0G529/Business+Headshot.jpg",
+            },
+            {
+                name: "Iida Niskane",
+                position: "Data Entry",
+                body: "This guy is a top notch designer and front end developer. He communicates well, works fast and produces quality work. We have been lucky to work with him!",
+                img: "https://i.pinimg.com/originals/a1/1e/2a/a11e2a9d5803e4dc2c034819ce12a16e.jpg",
+            },
+            {
+                name: "Hana Ali",
+                position: "CA",
+                body: "I've worked with literally hundreds of HTML/CSS developers and I have to say the top spot goes to this guy. This guy is an amazing developer. He stresses on good, clean code and pays heed to the details. I love developers who respect each and every aspect of a thoroughly thought out design and do their best to put it in code. He goes over and beyond and transforms ART into PIXELS - without a glitch, every time.",
+                img: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2016/02/What-to-wear-2.jpeg?ssl=1",
+            },
+            {
+                name: "Veeti Seppanen",
+                position: "Designer",
+                body: "This guy is a hard worker. Communication was also very good with him and he was very responsive all the time, something not easy to find in many freelancers. We'll definitely repeat with him.",
+                img: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2016/02/Headshot-Photography-London-1052.jpeg?ssl=1",
+            },
+            {
+                name: "Nikol Jane",
+                position: "Developer",
+                body: "This guy is a top notch designer and front end developer. He communicates well, works fast and produces quality work. We have been lucky to work with him!",
+                img: "https://headshots-inc.com/wp-content/uploads/2023/02/Professional-Headshot-Photography-Example-1.jpg",
+            },
+        ];
+
+        let container = document.querySelector(".container");
+
+        function showData(item, i) {
+            let creatediv = document.createElement("div");
+            creatediv.className = "post";
+
+            creatediv.innerHTML = `<span class="loader"></span>
+                <div class="fas fa-quote-right fa-quote"></div>
+                <div class="fas fa-quote-left fa-quote"></div>
+                 <p class="para">${item.body}</p>
+                <div class="details">
+                <div class="img"><img src="${item.img}" alt=""></div>
+                <div class="content">
+                <span>${item.name}</span>
+                <hr>
+                <span>${item.position}</span>
+                </div>
+                </div>`;
+            container.appendChild(creatediv);
+        }
+
+        data.forEach((item, index) => showData(item, index));
+
+        let currentIndex = 0;
+        let allPosts = document.getElementsByClassName('post');
+        allPosts[0].style.display = 'block';
+
+        let displayNextPost = () => {
+            allPosts[currentIndex].style.display = 'none';
+            currentIndex = (currentIndex + 1) % allPosts.length;
+            allPosts[currentIndex].style.display = 'block';
+        }
+
+        setInterval(displayNextPost, 5000);
+    </script>
+</body>
+
+</html>
