@@ -188,21 +188,3 @@ function submit() {
   `;
   body.appendChild(createInvoice);
 }
-
-// HTML to PDF Editable Text inside
-// function convertHTMLtoPDF() {
-//   const { jsPDF } = window.jspdf;
-
-//   let doc = new jsPDF("p", "mm", "a4");
-//   let pdfjs = document.querySelector("#divID");
-
-//   doc.html(pdfjs, {
-//     callback: function (doc) {
-//       doc.save("newpdf.pdf");
-//     },
-//     x: 10, // Adjust horizontal margin
-//     y: 10, // Adjust vertical margin
-//     width: 190, // Width of the content in mm (A4 width is 210mm, leaving 10mm margin on each side)
-//     windowWidth: pdfjs.scrollWidth, // Ensure that the content width is correctly scaled
-//   });
-// }

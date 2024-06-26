@@ -1,91 +1,109 @@
 let taskInput = document.querySelector("#task-input");
-let taskList = document.querySelector("#task-list");
 let addTaskBtn = document.querySelector("#add-task-btn");
-let deleteBtn = document.getElementsByClassName("delete");
-let textAreas = document.getElementsByTagName("textarea");
+let taskList = document.querySelector("#task-list");
 
 let id = 1;
-let allTask = JSON.parse(localStorage.getItem("allTaskStorage")) || [];
-
-if (allTask.length > 0) {
-  allTask.forEach((el) => createTaskElement(el.id, el.taskName));
-}
-
-let addTask = () => {
-  // LargestID Checking to assign Unique ID
-  let largestID = 0;
-  if (allTask.length > 0) {
-    largestID = allTask.map((el) => el.id).sort((a, b) => a - b);
-    id = Number(largestID[largestID.length - 1] + 1);
-    console.log("ID : ", id);
-  }
-
-  taskInput.value == "" && alert("Please enter task value!");
-  if (taskInput.value == "") {
-    return false; // Input is Empty
-  }
-
-  let taskValue = taskInput.value;
-  createTaskElement(id, taskValue);
-
-  let newTask = {
-    id: id,
-    taskName: taskValue,
-  };
-  id++;
-  taskInput.value = "";
-
-  allTask.push(newTask);
-  localStorage.setItem("allTaskStorage", JSON.stringify(allTask));
-  checkHeight();
-  console.log("Task : ", allTask);
+const getLocalData = () => {
+    let data = JSON.parse(localStorage.getItem("allTodoAtStorage"));
+    return data;
 };
 
+let allTask = getLocalData() || [];
+console.log("Length of allTask is : ", allTask.length);
+
 // createTaskElement function
-function createTaskElement(id, taskValue) {
-  let createTask = document.createElement("div");
-  createTask.className = "todoTask";
-  createTask.innerHTML = `<textarea id="task-${id}">${taskValue}</textarea><small class="update">Update</small><small class="delete" onclick=filterDeleted(${id})>Delete</small>`;
-  taskList.append(createTask);
+const createTaskElement = (newId, newValue) => {
+    let createTask = document.createElement("li");
+    createTask.className = "todoTask";
+    createTask.setAttribute("id", newId);
+    createTask.innerHTML = `<textarea readonly class="transClose">${newValue}</textarea>
+    <small class="edit" onClick="updateTask('${newId}')">Edit</small>
+    <small class="update" style="display: none;" onClick="editTask('${newId}')">Update</small>
+    <small class="delete" onclick="filterDeleted('${newId}')">Delete</small>`;
+    taskList.append(createTask);
+};
+
+if (allTask && allTask.length > 0) {
+    allTask.sort((a, b) => a.taskName.length - b.taskName.length).forEach((ele) => createTaskElement(ele.taskId, ele.taskName));
+    console.log("Data found and mapped");
+} else {
+    console.log("No Data found in localStorage");
 }
 
-// Add Button Trigger
-addTaskBtn.addEventListener("click", addTask);
-
-function filterDeleted(item) {
-  let removeTask = document.querySelector(`#task-${item}`).parentElement;
-  removeTask && removeTask.remove(); // Removed parentElement from DOM
-
-  allTask = allTask.filter((el) => el.id !== item); // Delete
-
-  localStorage.setItem("allTaskStorage", JSON.stringify(allTask)); // set filteredData to localStorage
-}
-
-function checkHeight() {
-  allTask.forEach((el) => {
-    if (el.taskName.length > 250) {
-      document.querySelector(`#task-${el.id}`).style.minHeight = "150px";
+function checkId() {
+    if (allTask.length > 0) {
+        let newArr = allTask
+        const arr = newArr.sort(
+            (a, b) => Number(b.taskId.slice(5)) - Number(a.taskId.slice(5))
+        );
+        id = Number(arr[0].taskId.slice(5)) + 1;
     }
-  });
 }
-checkHeight();
+checkId();
 
-function editTextArea(event) {
-  let tar = event.target.id;
-
-  const newID = Number(tar.slice(5));
-  let arrayIndex;
-  allTask.forEach((el, index) => {
-    if (el.id == newID) {
-      arrayIndex = index;
-    }
-  });
-  allTask[arrayIndex].taskName = document.getElementById(tar).value;
-  localStorage.setItem("allTaskStorage", JSON.stringify(allTask)); // Updating = set Updated Data to localStorage
-  console.log(allTask);
-  console.log("ID : ", newID, " ", typeof newID);
-}
-
-Array.from(textAreas).forEach((el) => {
-  el.addEventListener("change", editTextArea);
+// Add Task Button
+addTaskBtn.addEventListener("click", () => {
+    let newObj = {
+        'taskId': `task_${id}`,
+        'taskName': taskInput.value.trim(),
+    };
+    createTaskElement(newObj.taskId, newObj.taskName);
+    id++;
+    taskInput.value = "";
+    allTask.push(newObj);
+    updateStorage();
 });
+
+// Press Enter on input when task is written
+taskInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+        let newObj = {
+            'taskId': `task_${id}`,
+            'taskName': taskInput.value.trim(),
+        };
+        createTaskElement(newObj.taskId, newObj.taskName);
+        id++;
+        taskInput.value = "";
+        allTask.push(newObj);
+        updateStorage();
+    }
+});
+
+// Delete Todo or Filter todo
+const filterDeleted = (el) => {
+    document.getElementById(el).remove();
+    allTask = allTask.filter((item) => item.taskId !== el);
+    updateStorage();
+};
+
+// Update Todo
+const updateTask = (el) => {
+    // console.log(allTask)
+    let updateEl = document.getElementById(el).children[0];
+    let newInputValue = updateEl.value.trim();
+    if (updateEl.hasAttribute("readonly")) {
+        updateEl.removeAttribute("readonly");
+        updateEl.classList.remove = "transClose";
+        updateEl.classList.add = "transOpen";
+        document.getElementById(el).children[1].innerHTML = "Update";
+    } else {
+        updateEl.setAttribute("readonly", "true");
+        updateEl.classList.remove = "transOpen";
+        updateEl.classList.add = "transClose";
+        document.getElementById(el).children[1].innerHTML = "Edit";
+        allTask = allTask.map((e) => {
+            if (e.taskId === el) {
+                e.taskName = newInputValue;
+            }
+            return e;
+        });
+        updateStorage();
+    }
+};
+
+function updateStorage() {
+    localStorage.setItem("allTodoAtStorage", JSON.stringify(allTask));
+}
+
+
+
