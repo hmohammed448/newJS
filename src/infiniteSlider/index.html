@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding-top: 3rem;
+        }
+
+        .searchTab {
+            border: 1px solid;
+            width: 400px;
+            display: flex;
+            border-radius: 10px;
+            flex-direction: column;
+            max-height: 600px;
+        }
+
+        .header {
+            background-color: rgb(35, 135, 248);
+            border-radius: 10px 10px 0 0;
+            padding: 1rem;
+            min-width: 100%;
+        }
+
+        .inputSearch {
+            /* border: 1px solid red; */
+            width: 100%;
+            height: 30px;
+            border-radius: 10px;
+        }
+
+        .inputSearch input {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            padding: .5rem;
+            outline: none;
+        }
+
+        .allUsers {
+            padding: 1rem .5rem;
+            overflow-y: scroll;
+        }
+
+        .user {
+            height: 100px;
+            width: 100%;
+            padding: 0.5rem 0.2rem;
+            border-top: 1px solid;
+        }
+
+        .user .userChild {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        .profile {
+            border-radius: 50%;
+            width: 25%;
+            height: 100%;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            padding-left: .5rem;
+            padding-right: .5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .content .userName {
+            font-size: smaller;
+        }
+
+        .content .userLocation {
+            font-size: xx-small;
+        }
+    </style>
+</head>
+
+<body onload="callFn()">
+    <div class="container">
+
+        <div class="searchTab">
+            <div class="header">
+                <h1>Live Search</h1>
+                <p>Search user using search input...</p>
+                <div class="inputSearch"><input type="text" placeholder="Search user..." id="inputField"></div>
+            </div>
+            <div class="allUsers">
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>

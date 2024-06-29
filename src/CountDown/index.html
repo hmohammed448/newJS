@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCT JS</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .container {
+            margin: auto auto;
+            border: 1px solid;
+            border-radius: 10px;
+            padding: 1rem;
+            max-width: 300px;
+            display: flex;
+            gap: 1rem;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #displayTimer {
+            color: rgb(246, 61, 61);
+            font-size: xx-large;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="inp">
+            <input type="number" id="inputField" placeholder="Set timer in minutes">
+            <button id="btn">Start Timer</button>
+        </div>
+        <div id="displayTimer">0 : 00</div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
